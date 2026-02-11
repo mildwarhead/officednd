@@ -3,29 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kebab Knights - Office Tavern</title>
+<title>Kebab Knights Tavern</title>
 
 <style>
 :root{
-  --panel: rgba(35, 20, 12, .78);
-  --panel2: rgba(25, 15, 10, .62);
+  --panel: rgba(35,20,12,.8);
+  --panel2: rgba(25,15,10,.65);
   --accent: #ffcf6a;
   --text: #f4ead7;
-  --muted: rgba(244,234,215,.78);
-  --border: rgba(255,255,255,.18);
+  --muted: rgba(244,234,215,.75);
 }
 
-*{ box-sizing: border-box; }
+*{ box-sizing:border-box; }
 
 body{
   margin:0;
-  font-family: ui-monospace, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-  color: var(--text);
+  font-family: monospace;
+  color:var(--text);
   min-height:100vh;
-  overflow-x:hidden;
 }
 
-/* Tavern Background */
+/* Background */
 .bg{
   position:fixed;
   inset:0;
@@ -34,583 +32,307 @@ body{
   image-rendering: pixelated;
 }
 
-/* Subtle pixel grid overlay (optional vibe) */
-.pixel-grid{
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  pointer-events: none;
-  background:
-    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
-  background-size: 12px 12px;
-  mix-blend-mode: overlay;
-  opacity: .18;
-}
-
-/* Fire glow overlay (animated) */
+/* Fire Glow */
 .fire-glow{
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  opacity: .55;
-  /* Warm gradients that gently flicker like hearthlight */
+  position:fixed;
+  inset:0;
+  z-index:-2;
+  pointer-events:none;
+  opacity:.55;
   background:
-    radial-gradient(800px 500px at 18% 78%, rgba(255, 170, 80, .30), transparent 60%),
-    radial-gradient(600px 400px at 30% 82%, rgba(255, 210, 106, .22), transparent 60%),
-    radial-gradient(900px 650px at 10% 95%, rgba(255, 120, 60, .14), transparent 65%),
-    radial-gradient(900px 650px at 70% 88%, rgba(255, 170, 90, .10), transparent 70%);
-  filter: blur(1px) saturate(1.05);
-  animation: flicker 3.4s infinite steps(6, end);
+    radial-gradient(700px 450px at 20% 85%, rgba(255,160,80,.3), transparent 60%),
+    radial-gradient(900px 650px at 75% 85%, rgba(255,180,90,.15), transparent 65%);
+  animation:flicker 3s infinite steps(6,end);
 }
 
 @keyframes flicker{
-  0%   { opacity: .42; transform: translate(0px, 0px) scale(1); }
-  10%  { opacity: .55; transform: translate(1px, -1px) scale(1.005); }
-  22%  { opacity: .47; transform: translate(-1px, 1px) scale(1.01); }
-  35%  { opacity: .60; transform: translate(1px, 0px) scale(1.008); }
-  50%  { opacity: .45; transform: translate(0px, 1px) scale(1.004); }
-  67%  { opacity: .58; transform: translate(-1px, 0px) scale(1.012); }
-  83%  { opacity: .50; transform: translate(1px, 1px) scale(1.006); }
-  100% { opacity: .42; transform: translate(0px, 0px) scale(1); }
+  0%{opacity:.45}
+  25%{opacity:.6}
+  50%{opacity:.5}
+  75%{opacity:.65}
+  100%{opacity:.45}
 }
 
 /* Layout */
 header{
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 26px 18px 10px;
-}
-
-.topbar{
-  display:flex;
-  align-items:center;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.brand{
-  display:flex;
-  flex-direction: column;
-  gap: 6px;
+  text-align:center;
+  padding:25px 15px 10px;
 }
 
 h1{
   margin:0;
-  font-size:30px;
-  letter-spacing:1px;
-  text-shadow:0 10px 30px rgba(0,0,0,.7);
+  font-size:32px;
+  text-shadow:0 8px 25px rgba(0,0,0,.7);
 }
 
 .subtitle{
-  opacity:.9;
   font-size:13px;
-  color: var(--muted);
+  color:var(--muted);
+  margin-top:6px;
 }
-
-.controls-right{
-  display:flex;
-  gap:10px;
-  align-items:center;
-  flex-wrap: wrap;
-}
-
-.pill{
-  display:inline-flex;
-  align-items:center;
-  gap:8px;
-  padding: 10px 12px;
-  background: var(--panel2);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  box-shadow:0 10px 25px rgba(0,0,0,.25);
-}
-
-.pill small{ opacity:.9; }
 
 main{
-  max-width:980px;
-  margin: 14px auto 40px;
-  padding: 0 18px;
+  max-width:1100px;
+  margin:20px auto 40px;
+  padding:0 20px;
   display:grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
 }
 
-@media(max-width: 900px){
-  main{ grid-template-columns:1fr; }
+@media(max-width:900px){
+  main{grid-template-columns:1fr;}
 }
 
 .card{
   background:var(--panel);
-  padding:16px;
+  padding:18px;
   border-radius:12px;
-  backdrop-filter: blur(2px);
-  border: 1px solid rgba(255,255,255,.10);
-  box-shadow:0 14px 40px rgba(0,0,0,.38);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 15px 40px rgba(0,0,0,.45);
 }
 
-.card h2{
-  margin: 0 0 12px;
+h2{
+  margin-top:0;
   font-size:16px;
-  letter-spacing: .5px;
+}
+
+/* Roster */
+.roster{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.member{
+  text-align:center;
+  padding:10px;
+  background:var(--panel2);
+  border-radius:12px;
+  transition:.2s;
+}
+
+.member:hover{
+  transform:translateY(-4px);
+  box-shadow:0 10px 20px rgba(0,0,0,.5);
+}
+
+.member img{
+  width:120px;
+  height:auto;
+  image-rendering:pixelated;
+}
+
+.name{
+  font-weight:bold;
+  margin-top:6px;
+  color:var(--accent);
+}
+
+.role{
+  font-size:12px;
+  color:var(--muted);
 }
 
 /* Dice */
-.dice-controls{
+.controls{
   display:flex;
   gap:10px;
-  align-items:center;
   flex-wrap:wrap;
-  margin-bottom: 12px;
-}
-
-label{
-  font-size: 12px;
-  color: var(--muted);
+  align-items:center;
+  margin-bottom:10px;
 }
 
 input, select, button, textarea{
-  font-family: inherit;
-  color: var(--text);
-  background: var(--panel2);
-  border:1px solid var(--border);
+  font-family:inherit;
+  background:var(--panel2);
+  border:1px solid rgba(255,255,255,.2);
+  color:var(--text);
+  padding:8px;
   border-radius:8px;
-  padding:10px 10px;
-  outline:none;
 }
-
-input[type="number"]{ width: 92px; }
-select{ padding-right: 28px; }
 
 button{
   cursor:pointer;
-  font-weight: 700;
-  transition: transform .05s ease, border-color .12s ease, filter .12s ease;
-  user-select:none;
+  font-weight:bold;
 }
-button:hover{ border-color: rgba(255, 207, 106, .55); }
-button:active{ transform: translateY(1px); }
 
-.btn-accent{
-  border-color: rgba(255, 207, 106, .55);
-  box-shadow: 0 0 0 2px rgba(255, 207, 106, .10) inset;
-}
-.btn-danger{
-  border-color: rgba(255, 120, 120, .55);
-  box-shadow: 0 0 0 2px rgba(255, 120, 120, .10) inset;
+button:hover{
+  border-color:var(--accent);
 }
 
 .dice-grid{
   display:grid;
-  grid-template-columns: repeat(4, minmax(0,1fr));
-  gap:10px;
-}
-
-@media(max-width:520px){
-  .dice-grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:10px;
 }
 
 .result{
-  margin-top: 12px;
-  padding: 12px;
-  border-radius: 10px;
-  background: rgba(0,0,0,.22);
-  border: 1px solid rgba(255,255,255,.10);
-}
-
-.result .total{
-  font-size: 28px;
-  font-weight: 900;
-  color: var(--accent);
-  text-shadow: 0 10px 25px rgba(0,0,0,.6);
-}
-
-.result .details{
-  margin-top: 6px;
-  font-size: 12px;
-  color: var(--muted);
-  line-height: 1.35;
+  margin-top:12px;
+  font-size:24px;
+  color:var(--accent);
 }
 
 .history{
-  margin-top: 12px;
-  display:flex;
-  flex-direction: column;
-  gap: 8px;
-  max-height: 300px;
+  margin-top:10px;
+  font-size:12px;
+  max-height:250px;
   overflow:auto;
 }
 
-.history-item{
-  padding: 10px 10px;
-  background: rgba(0,0,0,.22);
-  border: 1px solid rgba(255,255,255,.10);
-  border-radius: 10px;
-  font-size: 12px;
-  line-height: 1.35;
-  display:flex;
-  justify-content: space-between;
-  gap: 10px;
+.history div{
+  background:var(--panel2);
+  padding:6px;
+  border-radius:6px;
+  margin-bottom:6px;
 }
-
-.tag{
-  display:inline-block;
-  padding: 2px 8px;
-  border-radius: 999px;
-  border:1px solid rgba(255,255,255,.16);
-  font-size: 11px;
-  opacity:.95;
-}
-
-.tag.crit{ border-color: rgba(80,255,150,.40); color: rgba(80,255,150,.95); }
-.tag.fumble{ border-color: rgba(255,120,120,.45); color: rgba(255,120,120,.95); }
 
 /* Notes */
 textarea{
-  width: 100%;
-  min-height: 320px;
-  resize: vertical;
-  line-height: 1.4;
+  width:100%;
+  min-height:300px;
+  resize:vertical;
 }
 
-.note-actions{
-  display:flex;
-  justify-content: space-between;
-  align-items:center;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 10px;
+.top-controls{
+  text-align:center;
+  margin-bottom:10px;
 }
 
-.note-status{
-  font-size: 12px;
-  color: var(--muted);
-}
 </style>
 </head>
 
 <body>
-  <div class="bg"></div>
-  <div class="pixel-grid"></div>
-  <div class="fire-glow"></div>
 
-  <header>
-    <div class="topbar">
-      <div class="brand">
-        <h1>Kebab Knights Tavern</h1>
-        <div class="subtitle">Roll true. Take notes. Let the hearth do the vibe work.</div>
-      </div>
+<div class="bg"></div>
+<div class="fire-glow"></div>
 
-      <div class="controls-right">
-        <div class="pill">
-          <button id="soundBtn" class="btn-accent" type="button" aria-pressed="false">🔈 Tavern</button>
-          <small id="soundLabel">Off</small>
-        </div>
-        <div class="pill">
-          <button id="clearHistory" class="btn-danger" type="button">Clear Rolls</button>
-        </div>
-      </div>
-    </div>
-  </header>
+<header>
+  <h1>Kebab Knights Tavern</h1>
+  <div class="subtitle">Roll true. Take notes. Let the hearth glow.</div>
+</header>
 
-  <main>
-    <!-- Dice -->
-    <section class="card">
-      <h2>Dice Roller</h2>
+<div class="top-controls">
+  <button onclick="toggleSound()">🔈 Tavern</button>
+</div>
 
-      <div class="dice-controls">
-        <div>
-          <label for="count"># of dice</label><br>
-          <input id="count" type="number" value="1" min="1" max="50">
-        </div>
+<main>
 
-        <div>
-          <label for="mod">Modifier</label><br>
-          <input id="mod" type="number" value="0" min="-99" max="99">
-        </div>
+<!-- ROSTER -->
+<section class="card">
+<h2>Kebab Knights</h2>
+<div class="roster">
+  <div class="member">
+    <img src="members/jason.png">
+    <div class="name">Jason</div>
+    <div class="role">Dungeon Master</div>
+  </div>
 
-        <div>
-          <label for="mode">d20 mode</label><br>
-          <select id="mode">
-            <option value="normal">Normal</option>
-            <option value="adv">Advantage</option>
-            <option value="dis">Disadvantage</option>
-          </select>
-        </div>
-      </div>
+  <div class="member">
+    <img src="members/ed.png">
+    <div class="name">Ed</div>
+    <div class="role">Knight of White Rims</div>
+  </div>
 
-      <div class="dice-grid" id="diceGrid">
-        <button class="btn-accent" data-sides="4" type="button">d4</button>
-        <button class="btn-accent" data-sides="6" type="button">d6</button>
-        <button class="btn-accent" data-sides="8" type="button">d8</button>
-        <button class="btn-accent" data-sides="10" type="button">d10</button>
-        <button class="btn-accent" data-sides="12" type="button">d12</button>
-        <button class="btn-accent" data-sides="20" type="button">d20</button>
-        <button class="btn-accent" data-sides="100" type="button">d100</button>
-        <button id="customBtn" type="button">Custom…</button>
-      </div>
+  <div class="member">
+    <img src="members/josh.png">
+    <div class="name">Josh</div>
+    <div class="role">Longhair Sentinel</div>
+  </div>
 
-      <div class="result" id="resultBox" style="display:none;">
-        <div class="total" id="total">—</div>
-        <div class="details" id="details"></div>
-      </div>
+  <div class="member">
+    <img src="members/diana.png">
+    <div class="name">Diana</div>
+    <div class="role">Blade of Dawn</div>
+  </div>
 
-      <div class="history" id="history"></div>
-    </section>
+  <div class="member">
+    <img src="members/sam.png">
+    <div class="name">Sam</div>
+    <div class="role">Arcane Flame</div>
+  </div>
 
-    <!-- Notes -->
-    <aside class="card">
-      <h2>Session Notes</h2>
-      <textarea id="notes" placeholder="What happened last session? Who lied? Who died? Who ordered the kebab platter?"></textarea>
+  <div class="member">
+    <img src="members/savannah.png">
+    <div class="name">Savannah</div>
+    <div class="role">Tavern Trickster</div>
+  </div>
+</div>
+</section>
 
-      <div class="note-actions">
-        <div class="note-status" id="noteStatus">Not saved yet</div>
-        <div style="display:flex; gap:10px; flex-wrap:wrap;">
-          <button id="copyNotes" class="btn-accent" type="button">Copy Notes</button>
-          <button id="clearNotes" class="btn-danger" type="button">Clear Notes</button>
-        </div>
-      </div>
-    </aside>
-  </main>
+<!-- DICE -->
+<section class="card">
+<h2>Dice Roller</h2>
+
+<div class="controls">
+  <label>#</label>
+  <input id="count" type="number" value="1" min="1">
+  <label>Mod</label>
+  <input id="mod" type="number" value="0">
+</div>
+
+<div class="dice-grid">
+  <button onclick="roll(4)">d4</button>
+  <button onclick="roll(6)">d6</button>
+  <button onclick="roll(8)">d8</button>
+  <button onclick="roll(10)">d10</button>
+  <button onclick="roll(12)">d12</button>
+  <button onclick="roll(20)">d20</button>
+  <button onclick="roll(100)">d100</button>
+</div>
+
+<div class="result" id="result"></div>
+<div class="history" id="history"></div>
+
+</section>
+
+<!-- NOTES -->
+<section class="card">
+<h2>Session Notes</h2>
+<textarea id="notes"></textarea>
+</section>
+
+</main>
 
 <script>
-/* -----------------------
-   Dice Roller
------------------------- */
-const el = (id) => document.getElementById(id);
-
-const countEl = el("count");
-const modEl = el("mod");
-const modeEl = el("mode");
-const resultBox = el("resultBox");
-const totalEl = el("total");
-const detailsEl = el("details");
-const historyEl = el("history");
-
-const clearHistoryBtn = el("clearHistory");
-const customBtn = el("customBtn");
-const diceGrid = el("diceGrid");
-
-function randInt(min, max){
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-function rollDie(sides){ return randInt(1, sides); }
-function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
-function fmtSign(n){ return n >= 0 ? `+${n}` : `${n}`; }
-function nowTime(){
-  const d = new Date();
-  return d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-}
-
-function showResult(total, html){
-  totalEl.textContent = total;
-  detailsEl.innerHTML = html;
-  resultBox.style.display = "block";
-}
-
-function addHistory({label, breakdown, total, tagText, tagClass}){
-  const row = document.createElement("div");
-  row.className = "history-item";
-
-  const left = document.createElement("div");
-  left.innerHTML = `<strong>${label}</strong> <span class="tag ${tagClass || ""}">${tagText || "roll"}</span>
-                    <div style="opacity:.9; margin-top:4px;">${breakdown}</div>`;
-
-  const right = document.createElement("div");
-  right.style.textAlign = "right";
-  right.innerHTML = `<div style="font-weight:900; color: var(--accent); font-size:14px;">${total}</div>
-                     <div style="opacity:.75; font-size:11px; margin-top:4px;">${nowTime()}</div>`;
-
-  row.appendChild(left);
-  row.appendChild(right);
-  historyEl.prepend(row);
-}
+function rand(max){ return Math.floor(Math.random()*max)+1; }
 
 function roll(sides){
-  let count = clamp(parseInt(countEl.value || "1", 10), 1, 50);
-  let mod = clamp(parseInt(modEl.value || "0", 10), -99, 99);
-  const mode = modeEl.value;
+  let count = parseInt(document.getElementById("count").value)||1;
+  let mod = parseInt(document.getElementById("mod").value)||0;
 
-  countEl.value = count;
-  modEl.value = mod;
+  let rolls=[];
+  for(let i=0;i<count;i++) rolls.push(rand(sides));
 
-  // d20 advantage/disadvantage: always 1 die (standard)
-  if (sides === 20 && mode !== "normal"){
-    const a = rollDie(20);
-    const b = rollDie(20);
-    const kept = mode === "adv" ? Math.max(a,b) : Math.min(a,b);
-    const total = kept + mod;
+  let sum = rolls.reduce((a,b)=>a+b,0);
+  let total=sum+mod;
 
-    const isCrit = kept === 20;
-    const isFumble = kept === 1;
-    const tagText = isCrit ? "crit" : (isFumble ? "fumble" : (mode === "adv" ? "adv" : "dis"));
-    const tagClass = isCrit ? "crit" : (isFumble ? "fumble" : "");
+  document.getElementById("result").innerText =
+    total+"  ["+rolls.join(", ")+"] "+(mod>=0?"+":"")+mod;
 
-    showResult(
-      total,
-      `d20 (${mode === "adv" ? "advantage" : "disadvantage"}): rolled <strong>${a}</strong> and <strong>${b}</strong>, kept <strong>${kept}</strong> ${mod ? ` ${fmtSign(mod)}` : ""}`
-    );
-
-    addHistory({
-      label: `d20 ${mode === "adv" ? "Advantage" : "Disadvantage"}`,
-      breakdown: `(${a}, ${b}) → kept ${kept} ${mod ? fmtSign(mod) : ""}`,
-      total,
-      tagText,
-      tagClass
-    });
-    return;
-  }
-
-  // Normal roll: count dice
-  const rolls = [];
-  for (let i=0; i<count; i++) rolls.push(rollDie(sides));
-  const sum = rolls.reduce((a,b)=>a+b,0);
-  const total = sum + mod;
-
-  const isD20Single = (sides === 20 && count === 1);
-  const tagText = isD20Single && rolls[0] === 20 ? "crit"
-                : isD20Single && rolls[0] === 1 ? "fumble"
-                : "roll";
-  const tagClass = tagText === "crit" ? "crit" : (tagText === "fumble" ? "fumble" : "");
-
-  showResult(
-    total,
-    `${count}×d${sides}: [${rolls.join(", ")}] = <strong>${sum}</strong> ${mod ? ` ${fmtSign(mod)}` : ""}`
-  );
-
-  addHistory({
-    label: `${count}×d${sides}`,
-    breakdown: `[${rolls.join(", ")}] = ${sum} ${mod ? fmtSign(mod) : ""}`,
-    total,
-    tagText,
-    tagClass
-  });
+  let div=document.createElement("div");
+  div.innerText=count+"d"+sides+": "+total;
+  document.getElementById("history").prepend(div);
 }
 
-diceGrid.addEventListener("click", (e) => {
-  const btn = e.target.closest("button");
-  if (!btn) return;
-
-  if (btn.id === "customBtn"){
-    const raw = prompt("Roll what die? (Example: 7 for d7, or 24 for d24)", "7");
-    if (!raw) return;
-    const sides = parseInt(raw.replace(/[^\d]/g, ""), 10);
-    if (!sides || sides < 2 || sides > 1000){
-      alert("Pick a number between 2 and 1000.");
-      return;
-    }
-    roll(sides);
-    return;
-  }
-
-  const sides = parseInt(btn.dataset.sides, 10);
-  if (!sides) return;
-  roll(sides);
+/* Notes auto save */
+const notes=document.getElementById("notes");
+notes.value=localStorage.getItem("kk_notes")||"";
+notes.addEventListener("input",()=>{
+  localStorage.setItem("kk_notes",notes.value);
 });
 
-clearHistoryBtn.addEventListener("click", () => {
-  historyEl.innerHTML = "";
-  resultBox.style.display = "none";
-});
+/* Sound */
+let audio=new Audio("tavern.mp3");
+audio.loop=true;
+audio.volume=.35;
+let playing=false;
 
-/* -----------------------
-   Session Notes (localStorage)
------------------------- */
-const notesEl = el("notes");
-const noteStatusEl = el("noteStatus");
-const copyNotesBtn = el("copyNotes");
-const clearNotesBtn = el("clearNotes");
-
-const NOTES_KEY = "kebab_knights_session_notes_v1";
-let saveTimer = null;
-
-function setStatus(msg){
-  noteStatusEl.textContent = msg;
+function toggleSound(){
+  if(!playing){audio.play();playing=true;}
+  else{audio.pause();playing=false;}
 }
-
-function loadNotes(){
-  const saved = localStorage.getItem(NOTES_KEY);
-  if (saved !== null){
-    notesEl.value = saved;
-    setStatus("Loaded saved notes");
-  } else {
-    setStatus("Not saved yet");
-  }
-}
-
-function saveNotesNow(){
-  localStorage.setItem(NOTES_KEY, notesEl.value);
-  setStatus("Saved");
-}
-
-notesEl.addEventListener("input", () => {
-  setStatus("Saving…");
-  if (saveTimer) clearTimeout(saveTimer);
-  saveTimer = setTimeout(() => {
-    saveNotesNow();
-  }, 450);
-});
-
-copyNotesBtn.addEventListener("click", async () => {
-  try{
-    await navigator.clipboard.writeText(notesEl.value);
-    setStatus("Copied to clipboard");
-  } catch(e){
-    // fallback
-    notesEl.select();
-    document.execCommand("copy");
-    setStatus("Copied to clipboard");
-  }
-});
-
-clearNotesBtn.addEventListener("click", () => {
-  const ok = confirm("Clear session notes? (This cannot be undone)");
-  if (!ok) return;
-  notesEl.value = "";
-  saveNotesNow();
-  setStatus("Cleared and saved");
-});
-
-loadNotes();
-
-/* -----------------------
-   Tavern Sound Toggle
-   - Put a file named tavern.mp3 in the same folder as index.html
------------------------- */
-const soundBtn = el("soundBtn");
-const soundLabel = el("soundLabel");
-
-const audio = new Audio("tavern.mp3");
-audio.loop = true;
-audio.volume = 0.35;
-
-let soundOn = false;
-
-function updateSoundUI(){
-  soundBtn.setAttribute("aria-pressed", soundOn ? "true" : "false");
-  soundLabel.textContent = soundOn ? "On" : "Off";
-  soundBtn.textContent = soundOn ? "🔊 Tavern" : "🔈 Tavern";
-}
-
-soundBtn.addEventListener("click", async () => {
-  try{
-    if (!soundOn){
-      await audio.play(); // browsers require click gesture; this is one
-      soundOn = true;
-    } else {
-      audio.pause();
-      soundOn = false;
-    }
-    updateSoundUI();
-  } catch(err){
-    alert("Couldn't play audio. Make sure tavern.mp3 is uploaded in the repo root (same folder as index.html).");
-  }
-});
-
-updateSoundUI();
 </script>
 
 </body>
